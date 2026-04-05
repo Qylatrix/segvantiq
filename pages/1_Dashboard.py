@@ -117,8 +117,12 @@ st.markdown("""
 
 # ── Logo helper ──────────────────────────────────────────────────────────────
 def _logo_b64() -> str:
-    p = Path("assets/logo.png")
-    return base64.b64encode(p.read_bytes()).decode() if p.exists() else ""
+    # Prefer the removebg (transparent) version
+    for p_name in ["segvantiq-removebg-preview.png", "assets/logo.png"]:
+        p = Path(p_name)
+        if p.exists():
+            return base64.b64encode(p.read_bytes()).decode()
+    return ""
 
 
 # ════════════════════════════════════════════════════════════════════════════
